@@ -53,8 +53,12 @@ main ()
 
     # Install middleware and necessary utilities
     print_info "Installing middleware and essential utilities..."
-    apt update
-    DEBIAN_FRONTEND=noninteractive apt install -y libpcsclite1 pcscd libccid libpcsc-perl pcsc-tools libnss3-tools unzip wget opensc
+    if [ -f /etc/fedora-release ]; then
+        sudo dnf install -y pcsc-lite ccid pcsc-tools nss-tools unzip wget opensc
+    else
+        apt update
+        DEBIAN_FRONTEND=noninteractive apt install -y libpcsclite1 pcscd libccid libpcsc-perl pcsc-tools libnss3-tools unzip wget opensc
+    fi
     print_info "Done"
 
     # Pull all necessary files
